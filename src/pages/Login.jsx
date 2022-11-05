@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {signIn} from "../auth/Firebase"
 
 const Login = () => {
+  const navigate = useNavigate()
+
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+
+
+
+  const handleSubmit = (e)=>{
+   e.preventDefault();
+   signIn(email,password,navigate)
+  }
+
+
+
   return (
     <div className="d-flex justify-content-center"
     style={{
@@ -19,7 +35,7 @@ const Login = () => {
       </div>
       <div className="register-form w-50">
         <h1 className="form-title display-3 ">Login</h1>
-        <form id="register" className="w-75 mx-auto">
+        <form id="register" className="w-75 mx-auto" onSubmit={handleSubmit} >
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
               Email
@@ -28,8 +44,10 @@ const Login = () => {
               type="email"
               className="form-control"
               id="email"
+              value={email}
               placeholder="Enter your email adress.."
               required
+              onChange={(e)=> setEmail(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -40,8 +58,10 @@ const Login = () => {
               type="password"
               className="form-control"
               id="password"
+              value={password}
               placeholder="Enter your password.."
               required
+              onChange={(e)=> setPassword(e.target.value)}
             />
           </div>
           <div className="link">Forgot Password?</div>

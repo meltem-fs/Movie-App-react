@@ -1,69 +1,51 @@
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import React from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { toastWarnNotify } from "../helpers/ToastNotify";
 
-export default function MediaCard({ movie }) {
-  const [isShown, setIsShown] = useState(100);
-  console.log("movie :>> ", movie);
+const IMG_API = "https://image.tmdb.org/t/p/w1280";
+const defaultImage =
+  "https://images.unsplash.com/photo-1581905764498-f1b60bae941a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80";
+
+const MovieCard = ({ poster_path, title, overview, vote_average, id }) => {
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const setVoteClass = (vote) => {
+    if (vote > 8) {
+      return "green";
+    } else if (vote >= 6) {
+      return "orange";
+    } else {
+      return "red";
+    }
+  };
   return (
-    <Card
-      sx={{ minWidth: 320, minHeight: 400, position: "relative" }}
-      onMouseEnter={() => setIsShown(0)}
-      onMouseLeave={() => setIsShown(100)}
+    <div
+      className="movie"
+      onClick={() => {
+        navigate("/details/" + id);
+        !currentUser && toastWarnNotify("Please log in to see detail");
+      }}
     >
-      <CardMedia
-        sx={{ maxWidth: "320px", height: "100%", objectFit: "cover" }}
-        component="img"
-        image={`https://image.tmdb.org/t/p/w1280${movie.poster_path}`}
-        alt={movie.title}
+      <img
+        loading="lazy"
+        src={poster_path ? IMG_API + poster_path : defaultImage}
+        alt="movie-card"
       />
-      <div
-        style={{
-          position: "absolute",
-          top: "0",
-          left: `${isShown}%`,
-          backgroundColor: "rgba(0,0,0,.5)",
-          height: "100%",
-        }}
-      >
-        <Typography
-          style={{
-            fontSize: "2rem",
-            fontWeight: "900",
-            color: "yellow",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {movie.title}
-        </Typography>
-        <Typography
-        variant="body1"
-          style={{
-            color:"white",
-            whiteSpace:"pre-wrap"
-          }}
-        >
-          {movie.overview}
-        </Typography>
-
-        <Typography
-        variant="h3"
-        sx={{
-          color:"white",
-          position:"absolute",
-          bottom:"1rem",
-          right:"1rem"
-        }}
-        >
-           {movie.vote_average}
-        </Typography>
-
-       
+      <div className="d-flex align-items-baseline justify-content-between p-1 text-white">
+        <h5>{title}</h5>
+        <span className={`tag ${setVoteClass(vote_average)}`}>
+          {" "}
+          {vote_average}
+        </span>
       </div>
-      {/* {isShown && (
-        
-      )} */}
-    </Card>
+      <div className="movie-over">
+        <h2>{title}</h2>
+        <p>{overview}</p>
+      </div>
+    </div>
   );
-}
+};
+
+export default MovieCard;

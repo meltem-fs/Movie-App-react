@@ -20,6 +20,12 @@ import {
 //* https://firebase.google.com/docs/auth/web/start
 //* https://console.firebase.google.com/ => project settings
 //! firebase console settings bölümünden firebaseconfig ayarlarını al
+// Import the functions you need from the SDKs you need
+// import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAgPBaqPbBMWLP5cVyP6PbIAsLHp7WQBBQ",
   authDomain: "movie-app-45e11.firebaseapp.com",
@@ -105,7 +111,7 @@ export const signUpProvider = (navigate) => {
     .then((result) => {
       console.log(result);
       navigate("/");
-      toastSuccessNotify("Logged out successfully!");
+      toastSuccessNotify("Logged in successfully!");
     })
     .catch((error) => {
       // Handle Errors here.

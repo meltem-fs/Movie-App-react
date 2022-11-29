@@ -1,48 +1,61 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { logOut } from "../auth/Firebase";
-import { AuthContext } from "../context/AuthContext";
+import { logOut } from "../auth/firebase";
+import { AuthContext } from "../context/AuthContextProvider";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
   return (
-    <div className="mb-4" style={{height:"6vh"}} >
-      <nav className="navbar navbar-expand-lg ">
+    <div className="justify-content-center" style={{ height: "5rem" }}>
+      <nav
+        className="navbar text-center"
+        style={{ backgroundImage: "linear-gradient(to right, red , yellow)" }}
+      >
         <div className="container-fluid">
-          <Link to="/" className="navbar-brand text-white">
-            <h4>React Movie App</h4>
+          <Link
+            style={{
+              textDecoration: "none",
+              fontSize: "3rem",
+              color: "yellow",
+            }}
+            to="/"
+          >
+            Movie App
           </Link>
-          <div className="d-flex text-white align-items-center ">
+          {/* <p>Welcome To My Movie Page</p> */}
+          <form className="d-flex m-1" role="search">
             {currentUser ? (
               <>
-                <h5 className="mb-0 text-capitalize">
-                  {currentUser?.displayName}
-                </h5>
+                <h5 className="mt-3">{currentUser?.displayName}</h5>
+
                 <button
-                  className="ms-2 btn btn-outline-light"
                   onClick={() => logOut()}
+                  className="btn btn-outline-danger m-2 "
+                  type="submit"
                 >
-                  Logout
+                  Logaut
                 </button>
               </>
             ) : (
               <>
                 <button
-                  className="ms-2 btn btn-outline-light"
                   onClick={() => navigate("/login")}
+                  className="btn btn-outline-danger m-2 "
+                  type="submit"
                 >
                   Login
                 </button>
                 <button
                   onClick={() => navigate("/register")}
-                  className="ms-2 btn btn-outline-light"
+                  className="btn btn-outline-danger m-2"
+                  type="submit"
                 >
                   Register
                 </button>
               </>
             )}
-          </div>
+          </form>
         </div>
       </nav>
     </div>

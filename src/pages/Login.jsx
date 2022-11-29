@@ -1,76 +1,99 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {signIn} from "../auth/Firebase"
+import { Link, useNavigate } from "react-router-dom";
+import { signIn } from "../auth/firebase";
+import { forgotPassword, signUpProvider } from "../auth/firebase";
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  console.log("email :>> ", email);
+  console.log("password", password);
 
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-
-
-
-  const handleSubmit = (e)=>{
-   e.preventDefault();
-   signIn(email,password,navigate)
-  }
-
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    signIn(email, password, navigate);
+  };
+  const handleGoogle = () => {
+    signUpProvider(navigate);
+  };
 
   return (
-    <div className="d-flex justify-content-center"
-    style={{
-      height:"94vh"
-    }}
+    <div
+      className="d-flex justify-content-center login  "
+      style={{
+        maxHeight: "88vh",
+      }}
     >
-      <div className="w-50 ">
+      <div
+        className="img w-50  d-none d-md-block "
+        style={{
+          height: "110vh",
+        }}
+      >
         <img
-          className="w-100"
-          src={"https://picsum.photos/800/800"}
-          alt="sample-movie"
+          src={"https://picsum.photos/200"}
+          alt=""
+          className="w-100 "
           style={{
-            height:"94vh"
+            height: "500",
           }}
         />
       </div>
-      <div className="register-form w-50">
-        <h1 className="form-title display-3 ">Login</h1>
-        <form id="register" className="w-75 mx-auto" onSubmit={handleSubmit} >
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
+
+      <div className="form w-50  ">
+        <h1 className="display-3 text-danger">Login</h1>
+        <form onSubmit={handleSubmit} className="w-75 mx-auto fs-2">
+          <div className="mb-3 mx-auto">
+            <label htmlFor="exampleInputEmail1" className="form-label">
               Email
             </label>
             <input
               type="email"
               className="form-control"
-              id="email"
-              value={email}
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
               placeholder="Enter your email adress.."
-              required
-              onChange={(e)=> setEmail(e.target.value)}
+              value={email || ""}
+              onChange={(e) => setEmail(e.target.value)}
             />
+            <div id="emailHelp" className="form-text">
+              We'll never share your email with anyone else.
+            </div>
           </div>
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">
+            <label htmlFor="exampleInputPassword1" className="form-label">
               Password
             </label>
             <input
               type="password"
               className="form-control"
-              id="password"
-              value={password}
-              placeholder="Enter your password.."
-              required
-              onChange={(e)=> setPassword(e.target.value)}
+              id="exampleInputPassword1"
+              placeholder="Enter your email password.."
+              value={password || ""}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="link">Forgot Password?</div>
-          <input
-            type="submit"
-            className="btn btn-primary form-control"
-            value="Login"
-          />
-          <button className="btn btn-primary form-control">
+          <div
+            style={{
+              color: "red",
+              textDecoration: "none",
+            }}
+            onClick={() => forgotPassword(email)}
+          >
+            Forgot Password?
+          </div>
+          <br />
+          <button type="submit" className="btn btn-danger w-100">
+            Login
+          </button>
+
+          <br />
+          <button
+            onClick={handleGoogle}
+            type="button"
+            className="btn btn-danger w-100"
+          >
             Continue with Google
           </button>
         </form>

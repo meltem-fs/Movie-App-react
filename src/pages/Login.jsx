@@ -22,21 +22,22 @@ const Login = () => {
     <div
       className="d-flex justify-content-center login  "
       style={{
-        maxHeight: "88vh",
+        maxHeight: "90vh",
       }}
     >
       <div
         className="img w-50  d-none d-md-block "
         style={{
-          height: "110vh",
+          height: "88.9vh",
         }}
       >
         <img
-          src={"https://picsum.photos/200"}
+          src={"https://picsum.photos/2000"}
           alt=""
           className="w-100 "
           style={{
-            height: "500",
+            height: "100%",
+            objectFit:"cover"
           }}
         />
       </div>

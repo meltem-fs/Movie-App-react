@@ -7,7 +7,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
   return (
-    <div className="justify-content-center" style={{ height: "5rem" }}>
+    <div className="justify-content-center mb-4" style={{ height: "5rem" }}>
       <nav
         className="navbar text-center"
         style={{ backgroundImage: "linear-gradient(to right, red , yellow)" }}
